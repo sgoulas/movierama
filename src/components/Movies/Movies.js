@@ -1,6 +1,7 @@
 import React from "react";
 import Movie from "../Movie";
 import Grid from "@material-ui/core/Grid";
+import PropTypes from "prop-types";
 
 const Movies = ({ moviesPlayingNow }) => {
   const movies = moviesPlayingNow.map(({ id: key, ...movie }) => (
@@ -20,6 +21,10 @@ const Movies = ({ moviesPlayingNow }) => {
       {movies}
     </Grid>
   );
+};
+
+Movies.propTypes = {
+  moviesPlayingNow: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default Movies;
