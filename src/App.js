@@ -11,6 +11,7 @@ import serviceCall from "./network/serviceCall";
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resultsPage, setResultsPage] = useState(1);
+  const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
 
   const updateSearchTermCallback = useCallback(
     (newSearchTerm) => setSearchTerm(newSearchTerm),
@@ -26,7 +27,10 @@ const App = () => {
     };
 
     serviceCall("GET", url, payload)
-      .then((res) => console.log(res))
+      .then((response) => {
+        const { results: playingMovies } = response.data;
+        setMoviesPlayingNow(playingMovies);
+      })
       .catch((err) => console.error(err));
   }, [resultsPage]);
 
@@ -51,7 +55,7 @@ const App = () => {
             <UserInput updateSearchTerm={updateSearchTermCallback} />
           </Grid>
           <Grid item>
-            <Movies />
+            <Movies moviesPlayingNow={moviesPlayingNow} />
           </Grid>
         </Grid>
       </Page>
