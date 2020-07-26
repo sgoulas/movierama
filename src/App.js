@@ -19,8 +19,7 @@ const App = () => {
   );
 
   useEffect(() => {
-    const url =
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=bc50218d91157b1ba4f142ef7baaa6a0&language=en-US&page=1";
+    const url = "https://api.themoviedb.org/3/movie/now_playing";
     const payload = {
       language: "en-US",
       page: resultsPage,

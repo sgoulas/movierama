@@ -1,4 +1,5 @@
 import axiosInstance from "./axiosInstance";
+import token from "./serviceCallUtilities";
 
 const serviceCall = (
   type,
@@ -16,7 +17,7 @@ const serviceCall = (
     method: type.toLowerCase() || "get",
     url,
     ...(payloadAsParams && {
-      params: payload,
+      params: { api_key: token, ...payload },
     }),
     ...(payloadAsData && {
       data: payload,
