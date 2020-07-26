@@ -6,13 +6,29 @@ import Grid from "@material-ui/core/Grid";
 import Page from "./components/Page";
 import UserInput from "./components/UserInput";
 import Movies from "./components/Movies";
+import serviceCall from "./network/serviceCall";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [resultsPage, setResultsPage] = useState(1);
+
   const updateSearchTermCallback = useCallback(
     (newSearchTerm) => setSearchTerm(newSearchTerm),
     [setSearchTerm]
   );
+
+  useEffect(() => {
+    const url =
+      "https://api.themoviedb.org/3/movie/now_playing?api_key=bc50218d91157b1ba4f142ef7baaa6a0&language=en-US&page=1";
+    const payload = {
+      language: "en-US",
+      page: resultsPage,
+    };
+
+    serviceCall("GET", url, payload)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
+  }, [resultsPage]);
 
   useEffect(() => {
     console.log("newSearchTerm", searchTerm);
