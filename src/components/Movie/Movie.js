@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
@@ -70,18 +69,13 @@ const Movie = ({
           </IconButton>
         }
         title="Shrimp and Chorizo Paella"
-        subheader={release_date}
-      />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title={title}
+        subheader={"Release date: ".concat(release_date)}
       />
       <CardContent>
         <Poster path={poster_path} alt={title} />
         <Typography variant="body2" color="textSecondary" component="p">
           {genre_ids.map((genreID) => (
-            <span>{genreID}</span>
+            <span key={genreID}>{genreID}</span>
           ))}
         </Typography>
       </CardContent>
