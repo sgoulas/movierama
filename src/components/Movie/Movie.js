@@ -15,6 +15,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Poster from "./Poster";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Movie = ({
-  poster_path = "movie poster",
+  poster_path,
   title,
   release_date,
   genre_ids,
@@ -77,6 +78,7 @@ const Movie = ({
         title={title}
       />
       <CardContent>
+        <Poster path={poster_path} alt={title} />
         <Typography variant="body2" color="textSecondary" component="p">
           {genre_ids.map((genreID) => (
             <span>{genreID}</span>
