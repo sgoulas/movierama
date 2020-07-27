@@ -14,8 +14,8 @@ const Page = ({ children }) => {
   );
 };
 
-Page.propTypes = {
-  children: PropTypes.element.isRequired,
-};
+// Page.propTypes = {
+//   children: PropTypes.element.isRequired,
+// };
 
 export default Page;

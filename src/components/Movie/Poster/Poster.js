@@ -63,7 +63,7 @@ const Poster = ({ path, alt }) => {
           },
           {
             threshold: 0.01,
-            rootMargin: "15%",
+            rootMargin: "75%",
           }
         );
         observer.observe(imageRef);

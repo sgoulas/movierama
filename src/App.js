@@ -7,6 +7,7 @@ import Page from "./components/Page";
 import UserInput from "./components/UserInput";
 import Movies from "./components/Movies";
 import serviceCall from "./network/serviceCall";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -57,6 +58,7 @@ const App = () => {
             <Movies moviesPlayingNow={moviesPlayingNow} />
           </Grid>
         </Grid>
+        <Footer />
       </Page>
     </>
   );
