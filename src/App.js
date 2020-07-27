@@ -9,28 +9,6 @@ import Movies from "./components/Movies";
 import serviceCall from "./network/serviceCall";
 import Footer from "./components/Footer";
 
-const observerCallback = (entries) => {
-  entries.forEach((entry) => {
-    if (entry.intersectionRatio) {
-      console.log("full appeared");
-    }
-    // Each entry describes an intersection change for one observed
-    // target element:
-    //   entry.boundingClientRect
-    //   entry.intersectionRatio
-    //   entry.intersectionRect
-    //   entry.isIntersecting
-    //   entry.rootBounds
-    //   entry.target
-    //   entry.time
-  });
-};
-
-const observerOptions = {
-  rootMargin: "0px",
-  threshold: 1.0,
-};
-
 const fetchNextPage = async (page) => {
   const url = "https://api.themoviedb.org/3/movie/now_playing";
   const payload = {
@@ -51,6 +29,10 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resultsPage, setResultsPage] = useState(1);
   const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
+  const observerOptions = {
+    rootMargin: "0px",
+    threshold: 1.0,
+  };
   const observerTarget = document.getElementById("end-of-page");
 
   /**
@@ -59,13 +41,19 @@ const App = () => {
   useEffect(() => {
     let observer;
     if (observerTarget) {
-      observer = new IntersectionObserver(observerCallback, observerOptions);
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.intersectionRatio) {
+            setResultsPage((prevResultsPage) => prevResultsPage + 1);
+          }
+        });
+      }, observerOptions);
 
       observer.observe(observerTarget);
     }
 
     return () => (observerTarget ? observer.unobserve() : null);
-  }, [observerTarget]);
+  }, [observerTarget, observerOptions]);
 
   const updateSearchTermCallback = useCallback(
     (newSearchTerm) => setSearchTerm(newSearchTerm),
@@ -73,7 +61,10 @@ const App = () => {
   );
 
   useEffect(() => {
-    fetchNextPage(resultsPage).then((movies) => setMoviesPlayingNow(movies));
+    console.log("resultsPage", resultsPage);
+    fetchNextPage(resultsPage).then((movies) =>
+      setMoviesPlayingNow((prevMovies) => prevMovies.concat(movies))
+    );
   }, [resultsPage]);
 
   /**
