@@ -19,7 +19,7 @@ export const fetchCurrentlyPlayingMovies = async (page) => {
 
 export const searchMovie = async (query) => {
   const url = SEARCH_MOVIE;
-  const payload = { query };
+  const payload = { language: "en-US", query };
 
   try {
     const response = await serviceCall("GET", url, payload);

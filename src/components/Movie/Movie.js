@@ -68,7 +68,7 @@ const Movie = ({
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        title={title}
         subheader={"Release date: ".concat(release_date)}
       />
       <CardContent>
