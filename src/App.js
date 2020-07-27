@@ -31,6 +31,22 @@ const observerOptions = {
   threshold: 1.0,
 };
 
+const fetchNextPage = async (page) => {
+  const url = "https://api.themoviedb.org/3/movie/now_playing";
+  const payload = {
+    language: "en-US",
+    page,
+  };
+
+  try {
+    const response = await serviceCall("GET", url, payload);
+    const { results: playingMovies } = response.data;
+    return Promise.resolve(playingMovies);
+  } catch (err) {
+    return await Promise.reject(err);
+  }
+};
+
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resultsPage, setResultsPage] = useState(1);
@@ -56,22 +72,8 @@ const App = () => {
     [setSearchTerm]
   );
 
-  /**
-   * fetch on result page change
-   */
   useEffect(() => {
-    const url = "https://api.themoviedb.org/3/movie/now_playing";
-    const payload = {
-      language: "en-US",
-      page: resultsPage,
-    };
-
-    serviceCall("GET", url, payload)
-      .then((response) => {
-        const { results: playingMovies } = response.data;
-        setMoviesPlayingNow(playingMovies);
-      })
-      .catch((err) => console.error(err));
+    fetchNextPage(resultsPage).then((movies) => setMoviesPlayingNow(movies));
   }, [resultsPage]);
 
   /**
