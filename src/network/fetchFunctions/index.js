@@ -1,0 +1,1 @@
+export { fetchCurrentlyPlayingMovies } from "./fetchFunctions";

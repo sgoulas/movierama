@@ -9,6 +9,11 @@ import Movies from "./components/Movies";
 import serviceCall from "./network/serviceCall";
 import Footer from "./components/Footer";
 
+const observerOptions = {
+  rootMargin: "0px",
+  threshold: 1.0,
+};
+
 const fetchNextPage = async (page) => {
   const url = "https://api.themoviedb.org/3/movie/now_playing";
   const payload = {
@@ -29,10 +34,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resultsPage, setResultsPage] = useState(1);
   const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
-  const observerOptions = {
-    rootMargin: "0px",
-    threshold: 1.0,
-  };
+
   const observerTarget = document.getElementById("end-of-page");
 
   /**
@@ -53,7 +55,7 @@ const App = () => {
     }
 
     return () => (observerTarget ? observer.unobserve() : null);
-  }, [observerTarget, observerOptions]);
+  }, [observerTarget]);
 
   const updateSearchTermCallback = useCallback(
     (newSearchTerm) => setSearchTerm(newSearchTerm),
