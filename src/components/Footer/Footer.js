@@ -1,7 +1,6 @@
 import React from "react";
 
 const styleObj = {
-  position: "fixed",
   left: "0px",
   bottom: "0px",
 };

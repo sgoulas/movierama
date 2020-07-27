@@ -9,16 +9,56 @@ import Movies from "./components/Movies";
 import serviceCall from "./network/serviceCall";
 import Footer from "./components/Footer";
 
+const observerCallback = (entries) => {
+  entries.forEach((entry) => {
+    if (entry.intersectionRatio) {
+      console.log("full appeared");
+    }
+    // Each entry describes an intersection change for one observed
+    // target element:
+    //   entry.boundingClientRect
+    //   entry.intersectionRatio
+    //   entry.intersectionRect
+    //   entry.isIntersecting
+    //   entry.rootBounds
+    //   entry.target
+    //   entry.time
+  });
+};
+
+const observerOptions = {
+  rootMargin: "0px",
+  threshold: 1.0,
+};
+
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [resultsPage, setResultsPage] = useState(1);
   const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
+  const observerTarget = document.getElementById("end-of-page");
+
+  /**
+   * intersection observer
+   */
+  useEffect(() => {
+    let observer;
+    if (observerTarget) {
+      observer = new IntersectionObserver(observerCallback, observerOptions);
+
+      observer.observe(observerTarget);
+    }
+
+    return () => (observerTarget ? observer.unobserve() : null);
+  }, [observerTarget]);
 
   const updateSearchTermCallback = useCallback(
     (newSearchTerm) => setSearchTerm(newSearchTerm),
     [setSearchTerm]
   );
 
+  /**
+   * fetch on result page change
+   */
   useEffect(() => {
     const url = "https://api.themoviedb.org/3/movie/now_playing";
     const payload = {
@@ -34,6 +74,9 @@ const App = () => {
       .catch((err) => console.error(err));
   }, [resultsPage]);
 
+  /**
+   * fetch on search term change
+   */
   useEffect(() => {
     console.log("newSearchTerm", searchTerm);
     // TODO fetch data
