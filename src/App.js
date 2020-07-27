@@ -6,7 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import Page from "./components/Page";
 import UserInput from "./components/UserInput";
 import Movies from "./components/Movies";
-import serviceCall from "./network/serviceCall";
+import {
+  fetchCurrentlyPlayingMovies,
+  searchMovie,
+} from "./network/fetchFunctions";
 import Footer from "./components/Footer";
 
 const observerOptions = {
@@ -14,24 +17,9 @@ const observerOptions = {
   threshold: 1.0,
 };
 
-const fetchNextPage = async (page) => {
-  const url = "https://api.themoviedb.org/3/movie/now_playing";
-  const payload = {
-    language: "en-US",
-    page,
-  };
-
-  try {
-    const response = await serviceCall("GET", url, payload);
-    const { results: playingMovies } = response.data;
-    return Promise.resolve(playingMovies);
-  } catch (err) {
-    return await Promise.reject(err);
-  }
-};
-
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [resultsPage, setResultsPage] = useState(1);
   const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
 
@@ -64,7 +52,7 @@ const App = () => {
 
   useEffect(() => {
     console.log("resultsPage", resultsPage);
-    fetchNextPage(resultsPage).then((movies) =>
+    fetchCurrentlyPlayingMovies(resultsPage).then((movies) =>
       setMoviesPlayingNow((prevMovies) => prevMovies.concat(movies))
     );
   }, [resultsPage]);
@@ -73,9 +61,21 @@ const App = () => {
    * fetch on search term change
    */
   useEffect(() => {
-    console.log("newSearchTerm", searchTerm);
-    // TODO fetch data
+    if (searchTerm) {
+      searchMovie(searchTerm).then((queryResult) =>
+        setSearchResults(queryResult)
+      );
+    } else {
+      setSearchResults([]);
+    }
   }, [searchTerm]);
+
+  const moviesToDisplay =
+    searchResults.length !== 0 ? (
+      <Movies moviesArray={searchResults} />
+    ) : (
+      <Movies moviesArray={moviesPlayingNow} />
+    );
 
   return (
     <>
@@ -92,9 +92,7 @@ const App = () => {
           <Grid item>
             <UserInput updateSearchTerm={updateSearchTermCallback} />
           </Grid>
-          <Grid item>
-            <Movies moviesPlayingNow={moviesPlayingNow} />
-          </Grid>
+          <Grid item>{moviesToDisplay}</Grid>
         </Grid>
         <Footer />
       </Page>

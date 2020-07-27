@@ -1,1 +1,1 @@
-export { fetchCurrentlyPlayingMovies } from "./fetchFunctions";
+export { fetchCurrentlyPlayingMovies, searchMovie } from "./fetchFunctions";

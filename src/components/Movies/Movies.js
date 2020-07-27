@@ -3,8 +3,8 @@ import Movie from "../Movie";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 
-const Movies = ({ moviesPlayingNow }) => {
-  const movies = moviesPlayingNow.map(({ id: key, ...movie }) => (
+const Movies = ({ moviesArray }) => {
+  const movies = moviesArray.map(({ id: key, ...movie }) => (
     <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={key}>
       <Movie {...movie} />
     </Grid>
