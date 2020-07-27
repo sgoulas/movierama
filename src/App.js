@@ -9,6 +9,7 @@ import Movies from "./components/Movies";
 import {
   fetchCurrentlyPlayingMovies,
   searchMovie,
+  fetchGenreList,
 } from "./network/fetchFunctions";
 import Footer from "./components/Footer";
 
@@ -18,12 +19,22 @@ const observerOptions = {
 };
 
 const App = () => {
+  const [genres, setGenres] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [resultsPage, setResultsPage] = useState(1);
+  const [moviesPlayingNowSearchPage, setMoviesPlayingNowSearchPage] = useState(
+    1
+  );
   const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
 
   const observerTarget = document.getElementById("end-of-page");
+
+  /**
+   * fetch genres
+   */
+  useEffect(() => {
+    fetchGenreList().then((genreList) => setGenres(genreList));
+  }, []);
 
   /**
    * intersection observer
@@ -34,7 +45,9 @@ const App = () => {
       observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.intersectionRatio) {
-            setResultsPage((prevResultsPage) => prevResultsPage + 1);
+            setMoviesPlayingNowSearchPage(
+              (prevResultsPage) => prevResultsPage + 1
+            );
           }
         });
       }, observerOptions);
@@ -51,10 +64,10 @@ const App = () => {
   );
 
   useEffect(() => {
-    fetchCurrentlyPlayingMovies(resultsPage).then((movies) =>
+    fetchCurrentlyPlayingMovies(moviesPlayingNowSearchPage).then((movies) =>
       setMoviesPlayingNow((prevMovies) => prevMovies.concat(movies))
     );
-  }, [resultsPage]);
+  }, [moviesPlayingNowSearchPage]);
 
   /**
    * fetch on search term change
