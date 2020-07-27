@@ -40,8 +40,8 @@ export const fetchGenreList = async () => {
 
   try {
     const response = await serviceCall("GET", url, payload);
-    const { results } = response.data;
-    return Promise.resolve(results);
+    const { genres } = response.data;
+    return Promise.resolve(genres);
   } catch (err) {
     return await Promise.reject(err);
   }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Poster from "./Poster";
 import PropTypes from "prop-types";
+import GenresContext from "../../Context/GenresContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +50,7 @@ const Movie = ({
   overview,
 }) => {
   const classes = useStyles();
+  const genreList = useContext(GenresContext);
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {

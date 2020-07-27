@@ -12,6 +12,7 @@ import {
   fetchGenreList,
 } from "./network/fetchFunctions";
 import Footer from "./components/Footer";
+import { GenresProvider } from "./Context/GenresContext";
 
 const observerOptions = {
   rootMargin: "0px",
@@ -104,7 +105,9 @@ const App = () => {
           <Grid item>
             <UserInput updateSearchTerm={updateSearchTermCallback} />
           </Grid>
-          <Grid item>{moviesToDisplay}</Grid>
+          <Grid item>
+            <GenresProvider value={genres}>{moviesToDisplay}</GenresProvider>
+          </Grid>
         </Grid>
         <Footer />
       </Page>
