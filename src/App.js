@@ -51,7 +51,6 @@ const App = () => {
   );
 
   useEffect(() => {
-    console.log("resultsPage", resultsPage);
     fetchCurrentlyPlayingMovies(resultsPage).then((movies) =>
       setMoviesPlayingNow((prevMovies) => prevMovies.concat(movies))
     );
