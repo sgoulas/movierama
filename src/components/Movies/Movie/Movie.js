@@ -18,13 +18,13 @@ import Poster from "./Poster";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import { Divider } from "@material-ui/core";
-import GenresContext from "../../Context/GenresContext";
+import GenresContext from "../../../Context/GenresContext";
 import { getGenreNameByID } from "./utils";
 import {
   fetchMovieReviews,
   fetchSimilarMovies,
   fetchMovieTrailers,
-} from "../../network/fetchFunctions";
+} from "../../../network/fetchFunctions";
 import Reviews from "./Reviews";
 import SimilarMovies from "./SimilarMovies";
 import Trailers from "./Trailers";

@@ -1,7 +1,12 @@
 export const getGenreNameByID = (genreList, genreID) => {
-  const { name } = genreList.find(({ id }) => id === genreID);
+  let match = "";
+  const genre = genreList.find(({ id }) => id === genreID);
+  if (genre) {
+    const { name } = genre;
+    match = name;
+  }
 
-  return name || "unresolved genre id";
+  return match;
 };
 
 export const sortyByPopularity = (a, b) => {
