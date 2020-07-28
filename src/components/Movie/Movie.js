@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -18,6 +18,9 @@ import Poster from "./Poster";
 import PropTypes from "prop-types";
 import GenresContext from "../../Context/GenresContext";
 import getGenreNameByID from "./utils";
+import { fetchMovieReviews } from "../../network/fetchFunctions";
+import Reviews from "./Reviews";
+import Review from "./Reviews/Review";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Movie = ({
+  id,
   poster_path,
   title,
   release_date,
@@ -53,11 +57,20 @@ const Movie = ({
   const classes = useStyles();
   const genreList = useContext(GenresContext);
   const movieGenres = genre_ids.map((id) => getGenreNameByID(genreList, id));
+  const [userReviews, setUsersReviews] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  useEffect(() => {
+    if (expanded) {
+      fetchMovieReviews(id).then((newUserReviews) =>
+        setUsersReviews(newUserReviews)
+      );
+    }
+  }, [expanded, id]);
 
   return (
     <Card className={classes.root}>
@@ -105,6 +118,9 @@ const Movie = ({
         <CardContent>
           <Typography paragraph>Overview:</Typography>
           <Typography paragraph>{overview}</Typography>
+        </CardContent>
+        <CardContent>
+          <Reviews reviews={userReviews} />
         </CardContent>
       </Collapse>
     </Card>
