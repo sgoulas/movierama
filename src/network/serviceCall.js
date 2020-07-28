@@ -6,7 +6,6 @@ const serviceCall = (
   url,
   payload,
   timeout = 5000,
-  headers = {},
   responseType = "json"
 ) => {
   const isGetRequest = type.toLowerCase() === "get";
