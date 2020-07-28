@@ -17,6 +17,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Poster from "./Poster";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
+import { Divider } from "@material-ui/core";
 import GenresContext from "../../Context/GenresContext";
 import { getGenreNameByID } from "./utils";
 import {
@@ -147,8 +148,13 @@ const Movie = ({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Overview:</Typography>
+          <Typography variant="h6">Overview:</Typography>
+          <Divider />
+          <br />
           <Typography paragraph>{overview}</Typography>
+        </CardContent>
+        <CardContent>
+          {movieTrailers.length && <Trailers movieTrailers={movieTrailers} />}
         </CardContent>
         <CardContent>
           <Typography className={classes.review}>
@@ -157,9 +163,6 @@ const Movie = ({
         </CardContent>
         <CardContent>
           <SimilarMovies movies={similarMovies} />
-        </CardContent>
-        <CardContent>
-          {movieTrailers.length && <Trailers movieTrailers={movieTrailers} />}
         </CardContent>
       </Collapse>
     </Card>

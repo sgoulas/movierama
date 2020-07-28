@@ -10,16 +10,12 @@ const serviceCall = (
 ) => {
   const isGetRequest = type.toLowerCase() === "get";
   const payloadAsParams = isGetRequest;
-  const payloadAsData = !isGetRequest;
 
   const request = {
     method: type.toLowerCase() || "get",
     url,
     ...(payloadAsParams && {
       params: { api_key: token, ...payload },
-    }),
-    ...(payloadAsData && {
-      data: payload,
     }),
     timeout,
     responseType,

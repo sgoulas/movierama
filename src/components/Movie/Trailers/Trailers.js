@@ -9,7 +9,14 @@ const Trailers = ({ movieTrailers }) => {
     <>
       <Typography variant="h6">Trailers</Typography>
       <Divider />
-      <Grid container direction="row" justify="center" alignItems="center">
+      <br />
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={2}
+      >
         {movieTrailers.map(({ id, key: youtubeKey, ...trailer }) => (
           <Grid item key={id}>
             <Trailer {...trailer} youtubeKey={youtubeKey} />
