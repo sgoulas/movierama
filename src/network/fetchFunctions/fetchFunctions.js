@@ -72,3 +72,16 @@ export const fetchSimilarMovies = async (movieID) => {
     return await Promise.reject(err);
   }
 };
+
+export const fetchMovieTrailers = async (movieID) => {
+  const url = `/movie/${movieID}/videos`;
+  const payload = { language: "en-US", type: "Trailer" };
+
+  try {
+    const response = await serviceCall("GET", url, payload);
+    const { results } = response.data;
+    return Promise.resolve(results);
+  } catch (err) {
+    return await Promise.reject(err);
+  }
+};

@@ -22,9 +22,11 @@ import { getGenreNameByID } from "./utils";
 import {
   fetchMovieReviews,
   fetchSimilarMovies,
+  fetchMovieTrailers,
 } from "../../network/fetchFunctions";
 import Reviews from "./Reviews";
 import SimilarMovies from "./SimilarMovies";
+import Trailers from "./Trailers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,6 +75,7 @@ const Movie = ({
   const movieGenres = genre_ids.map((id) => getGenreNameByID(genreList, id));
   const [userReviews, setUsersReviews] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
+  const [movieTrailers, setMovieTrailers] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -81,12 +84,9 @@ const Movie = ({
 
   useEffect(() => {
     if (expanded) {
-      fetchMovieReviews(id).then((newUserReviews) =>
-        setUsersReviews(newUserReviews)
-      );
-      fetchSimilarMovies(id).then((newSimilarMovies) =>
-        setSimilarMovies(newSimilarMovies)
-      );
+      fetchMovieReviews(id).then((results) => setUsersReviews(results));
+      fetchSimilarMovies(id).then((results) => setSimilarMovies(results));
+      fetchMovieTrailers(id).then((results) => setMovieTrailers(results));
     }
   }, [expanded, id]);
 
@@ -157,6 +157,9 @@ const Movie = ({
         </CardContent>
         <CardContent>
           <SimilarMovies movies={similarMovies} />
+        </CardContent>
+        <CardContent>
+          {movieTrailers.length && <Trailers movieTrailers={movieTrailers} />}
         </CardContent>
       </Collapse>
     </Card>

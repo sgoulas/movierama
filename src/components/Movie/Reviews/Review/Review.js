@@ -12,7 +12,9 @@ const Review = ({ author, content, id, url }) => {
         <Typography variant="caption">{author}</Typography>
         <br />
         <br />
-        <Typography variant="body2">{content}</Typography>
+        <Typography variant="body2" paragraph>
+          {content}
+        </Typography>
         <br />
       </div>
     </>
