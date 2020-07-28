@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosInstance";
-import token from "./serviceCallUtilities";
+import token from "./serviceCallDataModel";
 
 const serviceCall = (
   type,
