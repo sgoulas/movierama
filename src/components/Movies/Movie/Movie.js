@@ -157,7 +157,7 @@ const Movie = ({
           {movieTrailers.length && <Trailers movieTrailers={movieTrailers} />}
         </CardContent>
         <CardContent>
-          <Typography className={classes.review}>
+          <Typography variant="h6" className={classes.review}>
             <Reviews reviews={userReviews} />
           </Typography>
         </CardContent>
