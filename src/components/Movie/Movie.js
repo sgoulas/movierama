@@ -18,9 +18,13 @@ import Poster from "./Poster";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import GenresContext from "../../Context/GenresContext";
-import getGenreNameByID from "./utils";
-import { fetchMovieReviews } from "../../network/fetchFunctions";
+import { getGenreNameByID } from "./utils";
+import {
+  fetchMovieReviews,
+  fetchSimilarMovies,
+} from "../../network/fetchFunctions";
 import Reviews from "./Reviews";
+import SimilarMovies from "./SimilarMovies";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,6 +72,7 @@ const Movie = ({
   const genreList = useContext(GenresContext);
   const movieGenres = genre_ids.map((id) => getGenreNameByID(genreList, id));
   const [userReviews, setUsersReviews] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -78,6 +83,9 @@ const Movie = ({
     if (expanded) {
       fetchMovieReviews(id).then((newUserReviews) =>
         setUsersReviews(newUserReviews)
+      );
+      fetchSimilarMovies(id).then((newSimilarMovies) =>
+        setSimilarMovies(newSimilarMovies)
       );
     }
   }, [expanded, id]);
@@ -146,6 +154,9 @@ const Movie = ({
           <Typography className={classes.review}>
             <Reviews reviews={userReviews} />
           </Typography>
+        </CardContent>
+        <CardContent>
+          <SimilarMovies movies={similarMovies} />
         </CardContent>
       </Collapse>
     </Card>

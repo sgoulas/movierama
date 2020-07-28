@@ -3,4 +3,5 @@ export {
   searchMovie,
   fetchGenreList,
   fetchMovieReviews,
+  fetchSimilarMovies,
 } from "./fetchFunctions";

@@ -59,3 +59,16 @@ export const fetchMovieReviews = async (movieID) => {
     return await Promise.reject(err);
   }
 };
+
+export const fetchSimilarMovies = async (movieID) => {
+  const url = `/movie/${movieID}/similar`;
+  const payload = { language: "en-US" };
+
+  try {
+    const response = await serviceCall("GET", url, payload);
+    const { results } = response.data;
+    return Promise.resolve(results);
+  } catch (err) {
+    return await Promise.reject(err);
+  }
+};
