@@ -1,14 +1,21 @@
 import React from "react";
 import Review from "./Review";
 import PropTypes from "prop-types";
+import Typography from "@material-ui/core/Typography";
 
 const Reviews = ({ reviews }) => {
   const reviewsCopy = [...reviews];
   const firstTwoReviews = reviewsCopy.slice(0, 2);
+  const reviewsExist = reviews.length !== 0;
 
-  return firstTwoReviews.map(({ id, ...review }, index) => (
-    <Review {...review} key={id.concat(`review-${index}`)} />
-  ));
+  return (
+    <>
+      {reviewsExist && <Typography variant="h6">Reviews</Typography>}
+      {firstTwoReviews.map(({ id, ...review }) => (
+        <Review {...review} key={id} id={id} />
+      ))}
+    </>
+  );
 };
 
 Reviews.propTypes = {

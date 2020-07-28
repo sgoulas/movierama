@@ -15,16 +15,16 @@ import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Poster from "./Poster";
+import Grid from "@material-ui/core/Grid";
 import PropTypes from "prop-types";
 import GenresContext from "../../Context/GenresContext";
 import getGenreNameByID from "./utils";
 import { fetchMovieReviews } from "../../network/fetchFunctions";
 import Reviews from "./Reviews";
-import Review from "./Reviews/Review";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 345,
+    maxWidth: "auto",
   },
   media: {
     height: 0,
@@ -42,6 +42,16 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  genreList: {
+    fontStyle: "italic",
+  },
+  review: {
+    fontSize: "1rem",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+    fontWeight: "400",
+    lineHeight: "1.5",
+    letterSpacing: "0.00938em",
   },
 }));
 
@@ -72,6 +82,8 @@ const Movie = ({
     }
   }, [expanded, id]);
 
+  const movieTitle = <Typography variant="h4">{title}</Typography>;
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -85,16 +97,27 @@ const Movie = ({
             <MoreVertIcon />
           </IconButton>
         }
-        title={title}
+        title={movieTitle}
         subheader={"Release date: ".concat(release_date)}
       />
       <CardContent>
-        <Poster path={poster_path} alt={title} />
-        <Typography variant="body2" color="textSecondary" component="p">
-          {movieGenres.map((movieGenre, index) => (
-            <span key={index}>{movieGenre} </span>
-          ))}
-        </Typography>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <Grid item>
+            <Poster path={poster_path} alt={title} />
+          </Grid>
+          <Grid item>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
+              className={classes.genreList}
+            >
+              {movieGenres.map((movieGenre, index) => (
+                <span key={index}>{movieGenre} </span>
+              ))}
+            </Typography>
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
@@ -120,7 +143,9 @@ const Movie = ({
           <Typography paragraph>{overview}</Typography>
         </CardContent>
         <CardContent>
-          <Reviews reviews={userReviews} />
+          <Typography className={classes.review}>
+            <Reviews reviews={userReviews} />
+          </Typography>
         </CardContent>
       </Collapse>
     </Card>

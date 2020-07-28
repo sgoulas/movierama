@@ -33,7 +33,7 @@ const Image = styled.img`
 const Poster = ({ path, alt }) => {
   const [imageSrc, setImageSrc] = useState(placeHolder);
   const [imageRef, setImageRef] = useState();
-  const src = `http://image.tmdb.org/t/p/w300${path}`;
+  const src = `http://image.tmdb.org/t/p/w500${path}`;
 
   const onLoad = (event) => {
     event.target.classList.add("loaded");
@@ -82,6 +82,7 @@ const Poster = ({ path, alt }) => {
   }, [src, imageSrc, imageRef]);
   return (
     <Image
+      style={{ height: "500px", width: "450px", objectFit: "cover" }}
       ref={setImageRef}
       src={imageSrc}
       alt={alt}
