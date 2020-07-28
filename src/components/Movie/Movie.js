@@ -17,6 +17,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Poster from "./Poster";
 import PropTypes from "prop-types";
 import GenresContext from "../../Context/GenresContext";
+import getGenreNameByID from "./utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,7 @@ const Movie = ({
 }) => {
   const classes = useStyles();
   const genreList = useContext(GenresContext);
+  const movieGenres = genre_ids.map((id) => getGenreNameByID(genreList, id));
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {
@@ -76,8 +78,8 @@ const Movie = ({
       <CardContent>
         <Poster path={poster_path} alt={title} />
         <Typography variant="body2" color="textSecondary" component="p">
-          {genre_ids.map((genreID) => (
-            <span key={genreID}>{genreID}</span>
+          {movieGenres.map((movieGenre, index) => (
+            <span key={index}>{movieGenre} </span>
           ))}
         </Typography>
       </CardContent>
