@@ -9,7 +9,6 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -32,6 +31,7 @@ import Trailers from "./Trailers";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "auto",
+    backgroundColor: "#e9ecef",
   },
   media: {
     height: 0,
@@ -48,10 +48,16 @@ const useStyles = makeStyles((theme) => ({
     transform: "rotate(180deg)",
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: "#adb5bd",
+  },
+  rating: {
+    color: "#fff",
   },
   genreList: {
     fontStyle: "italic",
+  },
+  title: {
+    // color: "#fff",
   },
   review: {
     fontSize: "1rem",
@@ -91,14 +97,18 @@ const Movie = ({
     }
   }, [expanded, id]);
 
-  const movieTitle = <Typography variant="h4">{title}</Typography>;
+  const movieTitle = (
+    <Typography variant="h4" className={classes.title}>
+      {title}
+    </Typography>
+  );
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {vote_average}
+            <Typography className={classes.rating}>{vote_average}</Typography>
           </Avatar>
         }
         action={
