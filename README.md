@@ -6,7 +6,7 @@ I had to create a movie application that would fetch currently playing movies an
 
 ## Time frame
 
-This app was created in 4 days.
+This app was created in 6 days.
 
 ## Points of interest
 
