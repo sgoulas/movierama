@@ -4,6 +4,10 @@ This is my technical assignment as part of my interview process for the position
 
 I had to create a movie application that would fetch currently playing movies and display them alongside relevant information like users' rating, description, video trailers reviews and more.
 
+## Time frame
+
+This app was created in 4 days.
+
 ## Points of interest
 
 * `Intersection observer API` for 'infinite scrolling' experience and image lazyloading.
