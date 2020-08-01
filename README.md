@@ -8,8 +8,12 @@ I had to create a movie application that would fetch currently playing movies an
 
 This app was created in 6 days.
 
+## Stack
+
+This app was written in `React 16.13.1` using functional style.
+
 ## Points of interest
 
-* `Intersection observer API` for 'infinite scrolling' experience and image lazyloading.
-* Configurable and centralized data fetching via `serviceCall`,  a custom wrapper for configuring `axios` calls.
-* Usage of `async/await` for data fetching.
+- `Intersection observer API` for 'infinite scrolling' experience and image lazyloading.
+- Configurable and centralized data fetching via `serviceCall`, a custom wrapper for configuring `axios` calls.
+- Usage of `async/await` for data fetching.
